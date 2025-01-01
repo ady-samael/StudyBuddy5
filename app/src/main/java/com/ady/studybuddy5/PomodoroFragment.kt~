@@ -1,0 +1,69 @@
+package com.ady.studybuddy5
+
+import android.os.Bundle
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+
+class PomodoroFragment : Fragment() {
+    private var timerRunning = false
+    private var remainingTime = 25 * 60 // 25 minutes in seconds
+    private lateinit var timerTextView: TextView
+    private lateinit var startStopButton: Button
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val rootView = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+
+            timerTextView = TextView(requireContext()).apply {
+                text = "25:00"
+                textSize = 40f
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+            }
+
+            startStopButton = Button(requireContext()).apply {
+                text = "Start"
+                setOnClickListener {
+                    if (timerRunning) {
+                        stopTimer()
+                    } else {
+                        startTimer()
+                    }
+                }
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+            }
+
+            addView(timerTextView)
+            addView(startStopButton)
+        }
+
+        return rootView
+    }
+
+    private fun startTimer() {
+        timerRunning = true
+        startStopButton.text = "Stop"
+        // Your countdown logic here
+    }
+
+    private fun stopTimer() {
+        timerRunning = false
+        startStopButton.text = "Start"
+        // Stop the timer logic
+    }
+}

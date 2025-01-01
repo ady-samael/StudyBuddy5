@@ -1,0 +1,74 @@
+package com.ady.studybuddy5
+
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.os.CountDownTimer
+import android.util.AttributeSet
+import android.view.View
+
+class CountdownAnalogClock(context: Context, attrs: AttributeSet) : View(context, attrs) {
+
+    private val paint: Paint = Paint()
+    private var remainingTimeMillis: Long = 0
+    private var totalTimeMillis: Long = 0
+
+    private var isRunning = false
+    private var currentAngle = 0f
+
+    init {
+        paint.color = 0xFF000000.toInt() // Black color for clock hands
+        paint.strokeWidth = 8f
+        paint.isAntiAlias = true
+    }
+
+    // Start the countdown with a given time in milliseconds
+    fun startCountdown(timeInMillis: Long) {
+        totalTimeMillis = timeInMillis
+        remainingTimeMillis = timeInMillis
+        isRunning = true
+        startCountdownTimer()
+    }
+
+    private fun startCountdownTimer() {
+        object : CountDownTimer(remainingTimeMillis, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                remainingTimeMillis = millisUntilFinished
+                // Update angle of the clock hand for countdown
+                currentAngle = (360 * (remainingTimeMillis.toFloat() / totalTimeMillis.toFloat()))
+                invalidate() // Redraw the clock view
+            }
+
+            override fun onFinish() {
+                isRunning = false
+                currentAngle = 0f
+                invalidate() // Reset the clock
+            }
+        }.start()
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        val centerX = width / 2f
+        val centerY = height / 2f
+        val radius = (width / 2f) * 0.9f
+
+        // Draw the clock face (just a circle for simplicity)
+        paint.color = 0xFFE0E0E0.toInt() // Light gray color for clock face
+        paint.style = Paint.Style.FILL
+        canvas.drawCircle(centerX, centerY, radius, paint)
+
+        // Draw the clock hand as a line
+        paint.color = 0xFF000000.toInt() // Black color for hand
+        paint.style = Paint.Style.STROKE
+        val handLength = radius * 0.8f
+
+        // Calculate the hand's end position
+        val angleInRadians = Math.toRadians(currentAngle.toDouble())
+        val endX = centerX + handLength * Math.cos(angleInRadians).toFloat()
+        val endY = centerY + handLength * Math.sin(angleInRadians).toFloat()
+
+        // Draw the hand
+        canvas.drawLine(centerX, centerY, endX, endY, paint)
+    }
+}

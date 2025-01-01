@@ -1,0 +1,95 @@
+public class ClassScheduleActivity extends AppCompatActivity {
+
+    private EditText courseNameEditText, professorNameEditText;
+    private TextView startTimeTextView, endTimeTextView;
+    private Spinner amPmSpinner;
+    private int startHour = 9, startMinute = 0, endHour = 10, endMinute = 30;
+    private String amPm = "AM"; // Default AM
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_class_schedule);
+
+        // Initialize views
+        courseNameEditText = findViewById(R.id.courseNameEditText);
+        professorNameEditText = findViewById(R.id.professorNameEditText);
+        startTimeTextView = findViewById(R.id.startTimeTextView);
+        endTimeTextView = findViewById(R.id.endTimeTextView);
+        amPmSpinner = findViewById(R.id.amPmSpinner);
+
+        // Set AM/PM spinner item listener
+        amPmSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                amPm = (String) parentView.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                amPm = "AM";
+            }
+        });
+    }
+
+    // Show the Start TimePickerDialog
+    public void showStartTimePicker(View view) {
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                startHour = hourOfDay;
+                startMinute = minute;
+                updateStartTime();
+            }
+        };
+
+        // Show the TimePickerDialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, startHour, startMinute, false);
+        timePickerDialog.show();
+    }
+
+    // Show the End TimePickerDialog
+    public void showEndTimePicker(View view) {
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                endHour = hourOfDay;
+                endMinute = minute;
+                updateEndTime();
+            }
+        };
+
+        // Show the TimePickerDialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, endHour, endMinute, false);
+        timePickerDialog.show();
+    }
+
+    // Update the Start Time display
+    private void updateStartTime() {
+        String startTime = String.format("%02d:%02d %s", convertTo12Hour(startHour), startMinute, amPm);
+        startTimeTextView.setText("Start Time: " + startTime);
+    }
+
+    // Update the End Time display
+    private void updateEndTime() {
+        String endTime = String.format("%02d:%02d %s", convertTo12Hour(endHour), endMinute, amPm);
+        endTimeTextView.setText("End Time: " + endTime);
+    }
+
+    // Convert to 12-hour format
+    private int convertTo12Hour(int hourOfDay) {
+        return hourOfDay % 12 == 0 ? 12 : hourOfDay % 12;
+    }
+
+    // Example method for saving schedule info (to be expanded with actual logic)
+    private void saveSchedule() {
+        String courseName = courseNameEditText.getText().toString();
+        String professorName = professorNameEditText.getText().toString();
+
+        // Here, you can save the schedule details (including time) into a data structure or database
+        Log.d("Schedule", "Course Name: " + courseName);
+        Log.d("Schedule", "Professor: " + professorName);
+        Log.d("Schedule", "Start Time: " + startTimeTextView.getText().toString());
+        Log.d("Schedule", "End Time: " + endTimeTextView.getText().toString());
+    }
+}

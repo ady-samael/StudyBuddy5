@@ -19,7 +19,7 @@ class TodoAdapter(
             layoutParams = LinearLayout.LayoutParams(
                 0,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
-                2f // Adjusting to give more space to the task
+                1f
             )
         }
         val deadlineTextView: TextView = TextView(view.context).apply {
@@ -27,7 +27,7 @@ class TodoAdapter(
             layoutParams = LinearLayout.LayoutParams(
                 0,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
-                1f // Adjusting for the deadline to take less space
+                1f
             )
         }
         val finishButton: Button = Button(view.context).apply {
