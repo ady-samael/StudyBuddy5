@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#F5F5F5</color> <!-- Light gray background -->
+    <color name="textColor">#212121</color> <!-- Dark text color -->
+    <color name="buttonColor">#6200EE</color> <!-- Material Blue for buttons -->
+    <color name="accent">#03DAC5</color> <!-- Teal for accent elements -->
+    <color name="lightGray">#BDBDBD</color> <!-- Light gray for background elements -->
+    <color name="primary">#6200EE</color>
+
+
+</resources>

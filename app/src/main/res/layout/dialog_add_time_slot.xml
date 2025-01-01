@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_gravity="center">
+
+    <!-- Course Name EditText -->
+    <EditText
+        android:id="@+id/courseNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Course Name"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Professor Name EditText -->
+    <EditText
+        android:id="@+id/professorNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Professor's Name"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Start Time TextView (Click to choose time) -->
+    <TextView
+        android:id="@+id/startTimeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start Time"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="showStartTimePicker" />
+
+    <!-- End Time TextView (Click to choose time) -->
+    <TextView
+        android:id="@+id/endTimeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="End Time"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="showEndTimePicker" />
+</LinearLayout>

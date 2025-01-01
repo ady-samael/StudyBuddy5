@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <!-- Title Text for Day Selection -->
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select a Day"
+        android:textSize="24sp"
+        android:layout_marginBottom="32dp"
+        android:layout_gravity="center"/>
+
+    <!-- GridLayout for the buttons with 2 columns -->
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="4"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_gravity="center">
+
+        <!-- Buttons for days of the week -->
+        <Button
+            android:id="@+id/sundayButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:text="Sunday"
+            android:layout_margin="8dp" />
+
+        <Button
+            android:id="@+id/mondayButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:text="Monday"
+            android:layout_margin="8dp" />
+
+        <Button
+            android:id="@+id/tuesdayButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:text="Tuesday"
+            android:layout_margin="8dp" />
+
+        <Button
+            android:id="@+id/wednesdayButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:text="Wednesday"
+            android:layout_margin="8dp" />
+
+        <Button
+            android:id="@+id/thursdayButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:text="Thursday"
+            android:layout_margin="8dp" />
+
+        <Button
+            android:id="@+id/fridayButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:text="Friday"
+            android:layout_margin="8dp" />
+
+        <Button
+            android:id="@+id/saturdayButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:text="Saturday"
+            android:layout_margin="8dp" />
+
+    </GridLayout>
+
+</LinearLayout>

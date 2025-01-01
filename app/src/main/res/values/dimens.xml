@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <!-- Define the size of the buttons -->
+    <dimen name="button_size">100dp</dimen>
+</resources>
