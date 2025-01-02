@@ -23,13 +23,13 @@
         android:textSize="16sp"
         android:text="Professor: Name"/>
 
-    <!-- Time Slot TextView -->
+    <!-- Time Slot TextView for Start Time - End Time -->
     <TextView
         android:id="@+id/timeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:text="Time"/>
+        android:text="Start Time - End Time"/>
 
     <!-- Delete Button -->
     <TextView

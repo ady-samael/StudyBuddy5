@@ -10,7 +10,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import java.util.Calendar
+import android.widget.Toast
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ScheduleDetailActivity : AppCompatActivity() {
 
@@ -31,6 +33,9 @@ class ScheduleDetailActivity : AppCompatActivity() {
         // Load the schedules from SharedPreferences
         scheduleList = schedulePreferences.loadSchedules().toMutableList()
 
+        // Sort the schedule list by start time
+        sortScheduleList()
+
         val selectedDay = intent.getStringExtra("selectedDay") ?: "No Day Selected"
         val scheduleTitle = findViewById<TextView>(R.id.scheduleTitle)
         scheduleTitle.text = "Schedule for $selectedDay"
@@ -43,6 +48,14 @@ class ScheduleDetailActivity : AppCompatActivity() {
         val addTimeSlotButton = findViewById<Button>(R.id.addTimeSlotButton)
         addTimeSlotButton.setOnClickListener {
             showAddTimeSlotDialog(selectedDay)
+        }
+    }
+
+    private fun sortScheduleList() {
+        scheduleList.sortBy { schedule ->
+            // Convert the start time to a comparable format (using SimpleDateFormat)
+            val timeFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
+            timeFormat.parse(schedule.startTime)?.time
         }
     }
 
@@ -61,12 +74,22 @@ class ScheduleDetailActivity : AppCompatActivity() {
                 val courseName = courseNameEditText.text.toString()
                 val professorName = professorNameEditText.text.toString()
 
+                // Ensure that startTime, endTime, courseName, and professorName are valid
                 if (courseName.isNotEmpty() && professorName.isNotEmpty() && startTime != null && endTime != null) {
-                    scheduleList.add(ClassSchedule(courseName, professorName, "$startTime - $endTime"))
+                    // Create a ClassSchedule object with the startTime and endTime
+                    val classSchedule = ClassSchedule(courseName, professorName, startTime ?: "", endTime ?: "")
+                    scheduleList.add(classSchedule)
+
+                    // Sort the list after adding a new time slot
+                    sortScheduleList()
+
                     scheduleAdapter.notifyItemInserted(scheduleList.size - 1)
 
                     // Save the updated list to SharedPreferences
                     schedulePreferences.saveSchedules(scheduleList)
+                } else {
+                    // Optionally, show an error message if any of the fields are empty
+                    showToast("Please fill in all the fields.")
                 }
             }
             .setNegativeButton("Cancel", null)
@@ -116,5 +139,10 @@ class ScheduleDetailActivity : AppCompatActivity() {
 
         // Save the updated list to SharedPreferences after deletion
         schedulePreferences.saveSchedules(scheduleList)
+    }
+
+    // Utility function to show a toast message
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

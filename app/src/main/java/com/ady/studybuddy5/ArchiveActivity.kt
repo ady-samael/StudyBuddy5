@@ -30,32 +30,32 @@ class ArchiveActivity : AppCompatActivity() {
 
     // Function to load archived tasks from SharedPreferences
     private fun loadArchivedTasks(context: Context): List<TodoItem> {
-        val sharedPreferences = context.getSharedPreferences("ArchivedTodoPrefs", Context.MODE_PRIVATE)
-        val archivedJson = sharedPreferences.getString("archived_todo_list", "") ?: return emptyList()
+        val sharedPreferences = context.getSharedPreferences("ArchivePrefs", Context.MODE_PRIVATE)
+        val archivedJson = sharedPreferences.getString("archive_list", "") ?: return emptyList()
 
         // Safely parse the CSV-like string into TodoItems
         return archivedJson.split(";").mapNotNull {
             val parts = it.split(",")
-            if (parts.size == 3) {
-                TodoItem(parts[0], parts[1], parts[2])
+            if (parts.size == 4) {
+                TodoItem(parts[0], parts[1], parts[2], parts[3].toBoolean())
             } else {
                 null // Skip invalid entries
             }
         }
     }
 
-    // Optionally, you can add a method to save archived tasks back into shared preferences if needed.
+    // Function to save archived tasks to SharedPreferences
     private fun saveArchivedTasks(context: Context, archivedTasks: List<TodoItem>) {
-        val sharedPreferences = context.getSharedPreferences("ArchivedTodoPrefs", Context.MODE_PRIVATE)
+        val sharedPreferences = context.getSharedPreferences("ArchivePrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
         // Convert list of archived tasks to a CSV-like string
         val archivedJson = archivedTasks.joinToString(separator = ";") {
-            "${it.task},${it.description},${it.deadline}" // Format as CSV-like string
+            "${it.task},${it.description},${it.deadline},${it.isCompleted}" // Include completion status
         }
 
         // Save the string in SharedPreferences
-        editor.putString("archived_todo_list", archivedJson)
+        editor.putString("archive_list", archivedJson)
         editor.apply()
     }
 }

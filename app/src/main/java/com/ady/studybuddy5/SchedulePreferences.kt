@@ -13,10 +13,11 @@ class SchedulePreferences(context: Context) {
     // Function to save the list of schedules to SharedPreferences as a string
     fun saveSchedules(schedules: List<ClassSchedule>) {
         val scheduleStrings = schedules.joinToString(separator = "\n") { schedule ->
-            "${schedule.courseName},${schedule.professorName},${schedule.time}"
+            "${schedule.courseName},${schedule.professorName},${schedule.startTime},${schedule.endTime}"
         }
         sharedPreferences.edit().putString(SCHEDULES_KEY, scheduleStrings).apply()
     }
+
 
     // Function to load the list of schedules from SharedPreferences
     fun loadSchedules(): List<ClassSchedule> {
@@ -26,12 +27,13 @@ class SchedulePreferences(context: Context) {
             val lines = it.split("\n")
             for (line in lines) {
                 val parts = line.split(",")
-                if (parts.size == 3) {
-                    val schedule = ClassSchedule(parts[0], parts[1], parts[2])
+                if (parts.size == 4) { // Expecting 4 parts: courseName, professorName, startTime, endTime
+                    val schedule = ClassSchedule(parts[0], parts[1], parts[2], parts[3])
                     scheduleList.add(schedule)
                 }
             }
         }
         return scheduleList
     }
+
 }
